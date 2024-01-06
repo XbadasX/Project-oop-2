@@ -34,17 +34,21 @@ public:
 };
 
 class Student: public Person{
-        int studentId;
+        int studentId, studentYear;
     public:
-        Student(int ag, string nam, string sur, int id) : Person(ag, nam, sur), studentId(id) {}
+        Student(int ag, string nam, string sur, int year, int id) : Person(ag, nam, sur), studentYear(year), studentId(id) {}
 
         void print() {
             Person::print();
-            cout << ", Student ID: " << studentId << endl;
+            cout <<", Year Of Study: "<< studentYear<< ", Student ID: " << studentId << endl;
         }
 
         int getStudentId(){
             return studentId;
+        }
+
+        int getStudentYear(){
+            return studentYear;
         }
 };
 

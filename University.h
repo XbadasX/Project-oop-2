@@ -2,6 +2,8 @@
 #include "fout.cpp"
 #include "fin.cpp"
 #include <time.h>
+#include <cstdlib>
+#include <cmath>
 
 class UniSystem {
         vector <Student> students;            //Φτιάχνω ένα vector απο Student
@@ -9,6 +11,7 @@ class UniSystem {
         vector <Course> courses;              //Φτιάχνω ένα vector απο Course
         unordered_map <int, vector <Course>> enrolledCourses;   
         unordered_map <int, vector <Course>> enrolledStudentInCourses;
+        unordered_map <int, vector <int>> studentGradesInCourses;
         Semester semester;
     public:
     
@@ -168,6 +171,7 @@ class UniSystem {
                 }
                 enrolledCourses[prevSemester - 1] = c;
                 enrolledCourses[newSemester - 1].push_back({course});
+                return;
             }
         }
 
@@ -257,8 +261,10 @@ class UniSystem {
             for(auto i = 100; i < enrolledStudentInCourses.size() + 100; i++){
                 vector <Course> courses2 = enrolledStudentInCourses[i];
                 for(auto j = 0; j < courses2.size(); j++){
+                    int grade = giveGrade(i);
+                    studentGradesInCourses[i].push_back(grade);
                     if(course.getCourseId() == courses2[j].getCourseId()){
-                        if(giveGrade() >= 5){
+                        if(grade >= 5){
                             for(auto k = 0; k < students.size(); k++){
                                 if(students[k].getStudentId() == i) {
                                     students[k].print();
@@ -274,11 +280,45 @@ class UniSystem {
             studentFout(students2, "PassedStudents.txt");
         }
 
-        int giveGrade(){ 
+        void professorStatistics(Professor &professor, int sem){
+            cout << "Professor " << professor.getName() << "'s statistics for semester " << sem << ":\n";
+            unordered_map <string, vector<Professor>> teachers = semester.getTeachersMap();
+            for(auto i = 0; i < courses.size(); i++){
+                vector <Professor> prof = teachers[courses[i].getCourseName()];
+                for(auto j = 0; j < prof.size(); j++){
+                    if(prof[j].getProfessorId() == professor.getProfessorId()){
+                        for(auto k = 0; k < enrolledCourses.size(); k++){
+                            vector <Course> cour = enrolledCourses[k];
+                            for (auto l = 0; l < cour.size(); l++){
+                                if(cour[l].getCourseId() == courses[i].getCourseId() && sem == k+1){
+                                    cout << "Course: " << courses[i].getCourseName()<< endl;
+                                    for(auto m = 100; m < enrolledStudentInCourses.size() + 100; m++){
+                                        vector <Course> c = enrolledStudentInCourses[m];
+                                        for(auto n = 0; n < c.size(); n++){
+                                            if(c[n].getCourseId() == courses[i].getCourseId()){
+                                                cout << " Student: " << students[m - 100].getName() << ", Grade: " << giveGrade(n + m) << endl;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        
+                        }
+                
+                    }
+                
+                }
+            }
+           /* for (auto i = 0; i < teachers.size(); i++){
+                vector <Professor> professors = teachers[i];
+            } */
+        }
+
+
+        int giveGrade(int i){ 
             int lb = 0, ub = 10;
-            srand(time(0));
+            srand((i)*time(0));
             int grade = (rand() % (ub - lb + 1)) + lb;
-            cout<<grade<<endl;
             return grade; 
         }
            /* for (const auto& entry : enrolledCourses) {

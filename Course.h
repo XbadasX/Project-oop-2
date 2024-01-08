@@ -55,12 +55,6 @@ class Semester{
             teachers[course.getCourseName()] = professors;
         }
 
-        /* vector<Professor> getTeachers(string courseName) {   //?
-            vector<Professor> emptyVector;
-            auto it = teachers.find(courseName);
-            return (it != teachers.end()) ? it->second : emptyVector;
-        } */
-
         void getTeachers(Course course) {   //?                                 //Εκτυπώνω τους professors ενώς μαθήματος
             vector <Professor> p;
             p = teachers[course.getCourseName()];
@@ -68,5 +62,9 @@ class Semester{
                 cout <<i + 1<<". "<< p[i]<<" ";
             }
             cout<<endl;
+        }
+
+        unordered_map <string, vector<Professor>> getTeachersMap(){
+            return teachers;
         }
 }; 

@@ -38,10 +38,13 @@ int main() {
     cout<<endl;
 
     vector <Course> courses = courseFin("Courses.txt");
-    university.addCourse(courses[0]);
+   /* university.addCourse(courses[0]);
     university.addCourse(courses[1]);
     university.addCourse(courses[2]);
-    university.addCourse(courses[3]);
+    university.addCourse(courses[3]); */
+    for (auto i = 0; i < courses.size(); i++){
+        university.addCourse(courses[i]);
+    }
      university.printCourses();                      //Τα εκτυπώνω
     university.changeName(courses[1], "Python");            //Αλλάζω τα περιεχόμενα τους
     university.changeEcts(courses[1], 10);  
@@ -52,8 +55,8 @@ int main() {
     courseFout(courses);
     cout<<endl;
 
-    university.enrollCourses(1, {courses[0], courses[1]});          //Εγγράφω τα μαθήματα ανά εξάμηνο
-    university.enrollCourses(3, {courses[2]});      
+    university.enrollCourses(1, {courses[0], courses[1], courses[2], courses[3]});          //Εγγράφω τα μαθήματα ανά εξάμηνο
+    university.enrollCourses(3, {courses[4], courses[5], courses[6], courses[7], courses[8]});      
     university.printCoursesBySemester(1);           //Τα εκτυπώνω
     university.printCoursesBySemester(2);
     university.printCoursesBySemester(3);
@@ -67,6 +70,13 @@ int main() {
 
     university.appointProfessors(courses[0], {professors[0], professors[1]});     //Εγγράφω τους καθηγητές ανά μάθημα
     university.appointProfessors(courses[1], {professors[1]});
+    university.appointProfessors(courses[2], {professors[0], professors[1]});
+    university.appointProfessors(courses[3], {professors[0], professors[1]});
+    university.appointProfessors(courses[4], {professors[0], professors[1]});
+    university.appointProfessors(courses[5], {professors[0], professors[1]});
+    university.appointProfessors(courses[6], {professors[0], professors[1]});
+    university.appointProfessors(courses[7], {professors[0], professors[1]});
+    university.appointProfessors(courses[8], {professors[0], professors[1]});
     university.printProfessorsByCourse(courses[0]);         //Τους εκτυπώνω
     cout<<endl;
 
@@ -77,5 +87,9 @@ int main() {
     cout<<endl;
 
     university.displayPassedStudents(courses[0], 2);
+    cout<<endl;
+
+    university.professorStatistics(professors[1], 1);
+    cout<<endl;
     return 0;
 }

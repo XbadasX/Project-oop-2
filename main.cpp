@@ -9,68 +9,73 @@ int main() {
 
     UniSystem university;                           //Ορίζω ενα αντικείμενο κλάσης UniSystem το οποίο θα διαχειρίζει όλα τα παρακάτω
 
-    Student s1(20, "Chris", "Badas", 1, 100);          //Φτιάχνω students και τους προσθέτω στον vector του university
-    Student s2(22, "Nick", "Badas", 2, 101);
-    university.addStudent(s1);
-    university.addStudent(s2);
-    university.printStudents();                     //Τους εκτυπώνω
-    university.changeName(s1, "Mike");              //Αλλάζω τα περιεχόμενα τους
-    university.changeSurname(s1, "Feliz");
-    university.changeAge(s1, 28);
+    vector <Student> students = studentFin("Students.txt");
+    university.addStudent(students[0]);
+    university.addStudent(students[1]);
+    university.addStudent(students[2]);
+    university.printStudents();                 //Τους εκτυπώνω
+    university.changeName(students[0], "Mike");              //Αλλάζω τα περιεχόμενα τους
+    university.changeSurname(students[0], "Feliz");
+    university.changeAge(students[0], 28);
     cout<<"------"<<endl;
-    university.deleteStudent(s2);                   //Διαγράφω έναν student και εκτυπώνω τον ανανεομένο vector απο professors
+    students = university.deleteStudent(students[1]);
     university.printStudents();
+    studentFout(students, "StudentsAfter.txt");
     cout<<endl;
 
-    Professor p1(35, "David", "Crow", 200);         //Φτιάχνω professors και τους προσθέτω στον vector του university
-    Professor p2(40, "Johnson", "Malb", 201), p3(34, "Mike", "Bat", 202);   
-    university.addProfessor(p1);
-    university.addProfessor(p2);
-    university.addProfessor(p3);
+    vector <Professor> professors = professorFin("Professors.txt");
+    university.addProfessor(professors[0]);
+    university.addProfessor(professors[1]);
+    university.addProfessor(professors[2]);
     university.printProfessors();                   //Τους εκτυπώνω
-    university.changeName(p1, "Jim");               //Αλλάζω τα περιεχόμενα τους
-    university.changeSurname(p1, "Dake");
-    university.changeAge(p1, 45);
+    university.changeName(professors[0], "Jim");               //Αλλάζω τα περιεχόμενα τους
+    university.changeSurname(professors[0], "Dake");
+    university.changeAge(professors[0], 45);
     cout<<"------"<<endl;
-    university.deleteProfessor(p2);                 //Διαγράφω έναν professor και εκτυπώνω τον ανανεομένο vector απο students
+    professors = university.deleteProfessor(professors[1]);                 //Διαγράφω έναν professor και εκτυπώνω τον ανανεομένο vector απο students
     university.printProfessors();
+    professorFout(professors);
     cout<<endl;
 
-    Course c1("C++ Programming", 8, true, 300);     //Φτιάχνω courses και τα προσθέτω στον vector του university
-    Course c2("C Programming", 6, true, 301), c3("Java", 9, true, 302);
-    university.addCourse(c1);
-    university.addCourse(c2);
-    university.addCourse(c3);
-    university.printCourses();                      //Τα εκτυπώνω
-    university.changeName(c2, "Python");            //Αλλάζω τα περιεχόμενα τους
-    university.changeEcts(c2, 10);  
-    university.changeCompulsory(c2, false);
+    vector <Course> courses = courseFin("Courses.txt");
+    university.addCourse(courses[0]);
+    university.addCourse(courses[1]);
+    university.addCourse(courses[2]);
+    university.addCourse(courses[3]);
+     university.printCourses();                      //Τα εκτυπώνω
+    university.changeName(courses[1], "Python");            //Αλλάζω τα περιεχόμενα τους
+    university.changeEcts(courses[1], 10);  
+    university.changeCompulsory(courses[1], false);
     cout<<"------"<<endl;
-    university.deleteCourse(c1);                    //Διαγράφω ένα course και εκτυπώνω τον ανανεομένο vector απο courses
+    courses = university.deleteCourse(courses[0]);                    //Διαγράφω ένα course και εκτυπώνω τον ανανεομένο vector απο courses
     university.printCourses();
+    courseFout(courses);
     cout<<endl;
 
-    university.enrollCourses(1, {c1, c2});          //Εγγράφω τα μαθήματα ανά εξάμηνο
-    university.enrollCourses(3, {c3});      
+    university.enrollCourses(1, {courses[0], courses[1]});          //Εγγράφω τα μαθήματα ανά εξάμηνο
+    university.enrollCourses(3, {courses[2]});      
     university.printCoursesBySemester(1);           //Τα εκτυπώνω
     university.printCoursesBySemester(2);
     university.printCoursesBySemester(3);
     cout<<endl;
 
-    university.changeCourseSemester(c1, 1, 2);      //Αλλάζω το εξάμηνο ενώς μαθήματος. Στις παραμέτρους έχω το course , το εξάμηνο που ήταν και το εξάμηνο που θέλω να πάει
+    university.changeCourseSemester(courses[0], 1, 2);      //Αλλάζω το εξάμηνο ενώς μαθήματος. Στις παραμέτρους έχω το course , το εξάμηνο που ήταν και το εξάμηνο που θέλω να πάει
     university.printCoursesBySemester(1);
     university.printCoursesBySemester(2);
     university.printCoursesBySemester(3);
     cout<<endl;
 
-    university.appointProfessors(c1, {p1, p2});     //Εγγράφω τους καθηγητές ανά μάθημα
-    university.appointProfessors(c2, {p2});
-    university.printProfessorsByCourse(c1);         //Τους εκτυπώνω
+    university.appointProfessors(courses[0], {professors[0], professors[1]});     //Εγγράφω τους καθηγητές ανά μάθημα
+    university.appointProfessors(courses[1], {professors[1]});
+    university.printProfessorsByCourse(courses[0]);         //Τους εκτυπώνω
     cout<<endl;
 
-    university.enrollStudentInCourse(s1, {c1, c2});    //Εγγράφω τους μαθητές ανά μάθημα
-    university.enrollStudentInCourse(s2, {c3});
-    university.printCoursesByStudent(s1);               //Τους εκτυπώνω
-    university.printCoursesByStudent(s2);
+    university.enrollStudentInCourse(students[0], {courses[0], courses[1]});    //Εγγράφω τους μαθητές ανά μάθημα
+    university.enrollStudentInCourse(students[1], {courses[0], courses[1], courses[2]});
+    university.printCoursesByStudent(students[0]);               //Τους εκτυπώνω
+    university.printCoursesByStudent(students[1]);
+    cout<<endl;
+
+    university.displayPassedStudents(courses[0], 2);
     return 0;
 }

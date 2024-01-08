@@ -1,4 +1,7 @@
 #include "Course.h"
+#include "fout.cpp"
+#include "fin.cpp"
+#include <time.h>
 
 class UniSystem {
         vector <Student> students;            //Φτιάχνω ένα vector απο Student
@@ -48,13 +51,14 @@ class UniSystem {
             students.push_back(student);
         }
 
-        void deleteStudent(Student& student){                                  //Διαγράφω έναν student απο τον vector students
+        vector <Student> deleteStudent(Student& student){                                  //Διαγράφω έναν student απο τον vector students
             for(auto i = 0; i < students.size(); i++){
                 if(student.getStudentId() == students[i].getStudentId()){
                     students.erase(students.begin() + i);
-                    return;
+                    return students;
                 }
             }
+            return students;
         }
 
         void changeName(Professor& professor, string nam){                      //Αλλάζω το όνομα ενώς professor με βαση το id του
@@ -94,13 +98,14 @@ class UniSystem {
             professors.push_back(professor);
         }
 
-        void deleteProfessor(Professor& professor){                                 //Διαγράφω έναν professor απο το vector professors
+        vector <Professor> deleteProfessor(Professor& professor){                                 //Διαγράφω έναν professor απο το vector professors
             for(auto i = 0; i < professors.size(); i++){
                 if(professor.getProfessorId() == professors[i].getProfessorId()){
                     professors.erase(professors.begin() + i);
-                    return;
+                    return professors;
                 }
             }
+            return professors;
         }
         
 
@@ -108,13 +113,14 @@ class UniSystem {
             courses.push_back(course);
         }
 
-        void deleteCourse(Course& course){                                          //Διαγράφω ενα course απο το vector courses
+        vector <Course> deleteCourse(Course& course){                                          //Διαγράφω ενα course απο το vector courses
             for(auto i = 0; i < courses.size(); i++){
                 if(course.getCourseId() == courses[i].getCourseId()){
                     courses.erase(courses.begin() + i);
-                    return;
+                    return courses;
                 }
             }
+            return courses;
         }
 
         void changeName(Course& course, string nam){                                    //Αλλάζω το όνομα ενώς course με βαση το id του
@@ -244,5 +250,45 @@ class UniSystem {
                 courses[i].display();
             }
         }
+
+        void displayPassedStudents(Course &course, int academicSemester) {
+            cout << "Students who passed " << course.getCourseName() << " in semester " << academicSemester << ":\n";
+            vector <Student> students2;
+            for(auto i = 100; i < enrolledStudentInCourses.size() + 100; i++){
+                vector <Course> courses2 = enrolledStudentInCourses[i];
+                for(auto j = 0; j < courses2.size(); j++){
+                    if(course.getCourseId() == courses2[j].getCourseId()){
+                        if(giveGrade() >= 5){
+                            for(auto k = 0; k < students.size(); k++){
+                                if(students[k].getStudentId() == i) {
+                                    students[k].print();
+                                    students2.push_back(students[k]);
+                                }
+                            }
+                        }
+                        
+                       
+                    }
+                }
+            }
+            studentFout(students2, "PassedStudents.txt");
+        }
+
+        int giveGrade(){ 
+            int lb = 0, ub = 10;
+            srand(time(0));
+            int grade = (rand() % (ub - lb + 1)) + lb;
+            cout<<grade<<endl;
+            return grade; 
+        }
+           /* for (const auto& entry : enrolledCourses) {
+                const Student& student = getStudentById(entry.first);
+                const std::vector<Course>& studentCourses = entry.second;
+                if (std::find(studentCourses.begin(), studentCourses.end(), course) != studentCourses.end()) {
+                    // Student is enrolled in the course
+                    std::cout << student.getName() << " (ID: " << student.getStudentId() << ")\n";
+                }
+            }
+        } */
 
 };

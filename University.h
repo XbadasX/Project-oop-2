@@ -4,6 +4,10 @@
 #include <time.h>
 #include <cstdlib>
 #include <cmath>
+#define MAX_YEARS 2
+#define COMPULSORY_COURSES 3
+#define MIN_ECTS 30
+
 
 class UniSystem {
         vector <Student> students;            //Φτιάχνω ένα vector απο Student
@@ -13,6 +17,30 @@ class UniSystem {
         unordered_map <int, vector <Course>> enrolledStudentInCourses;
         unordered_map <int, vector <int>> studentGradesInCourses;
         Semester semester;
+
+        bool hasCompletedRequirements(Student &student){
+            int sum_compulsory = 0;
+            int sum_ects = 0;
+         //  cout<<student.getStudentYear()<<endl;
+            if(student.getStudentYear() >= MAX_YEARS){
+                vector <Course> course = enrolledStudentInCourses[student.getStudentId()];
+                for(auto i = 0; i < course.size(); i++){
+                    if(studentGradesInCourses[student.getStudentId()][i] >= 5){
+                        if(course[i].isCompulsory() == 1){
+                            sum_compulsory++;
+                        }
+                        sum_ects += course[i].getEcts();
+                    }
+                   // cout << "sum comp = " << sum_compulsory << " sum ects = " << sum_ects << endl;
+                    if(sum_compulsory >= COMPULSORY_COURSES && sum_ects >= MIN_ECTS){
+                        return 1;
+                    }
+                }
+            }
+            cout << "sum comp = " << sum_compulsory << " sum ects = " << sum_ects << endl;
+            return 0;
+        }
+
     public:
     
 
@@ -261,7 +289,7 @@ class UniSystem {
             for(auto i = 100; i < enrolledStudentInCourses.size() + 100; i++){
                 vector <Course> courses2 = enrolledStudentInCourses[i];
                 for(auto j = 0; j < courses2.size(); j++){
-                    int grade = giveGrade(i);
+                    int grade = giveGrade(i + j);
                     studentGradesInCourses[i].push_back(grade);
                     if(course.getCourseId() == courses2[j].getCourseId()){
                         if(grade >= 5){
@@ -296,7 +324,7 @@ class UniSystem {
                                         vector <Course> c = enrolledStudentInCourses[m];
                                         for(auto n = 0; n < c.size(); n++){
                                             if(c[n].getCourseId() == courses[i].getCourseId()){
-                                                cout << " Student: " << students[m - 100].getName() << ", Grade: " << giveGrade(n + m) << endl;
+                                                cout << " Student: " << students[m - 100].getName() << ", Grade: " << studentGradesInCourses[m][n] << endl;
                                             }
                                         }
                                     }
@@ -309,11 +337,39 @@ class UniSystem {
                 
                 }
             }
-           /* for (auto i = 0; i < teachers.size(); i++){
-                vector <Professor> professors = teachers[i];
-            } */
         }
 
+        void printStudentGradesInAllSemesters(Student &student){
+            cout << "Analytical grades for student " << student.getName() << " (ID: " << student.getStudentId() << ") "  << ":\n";
+            vector <Course> c = enrolledStudentInCourses[student.getStudentId()];
+            for(auto n = 0; n < c.size(); n++){
+                cout << " Course: " << c[n].getCourseName() << ", Grade: " << studentGradesInCourses[student.getStudentId()][n] << endl;
+            }
+        }
+
+        void printStudentGradesBySemester(Student &student, int sem){
+             cout << "Analytical grades for student " << student.getName() << " (ID: " << student.getStudentId() << ") " << " in semester "<< sem << ":\n";
+            vector <Course> course = enrolledCourses[sem - 1];
+            for (auto i = 0; i < course.size(); i++){
+                vector <Course> c = enrolledStudentInCourses[student.getStudentId()];
+                for (auto j = 0; j < c.size(); j++){
+                    if(course[i].getCourseId() == c[j].getCourseId()){
+                        cout << "Course: " << c[j].getCourseName() << ", Grade: " << studentGradesInCourses[student.getStudentId()][j] << endl;
+                    }
+                }
+            }
+        }
+
+        void printElligibleForDegree() {
+            cout << "Students eligible for degree:\n";
+            for(auto i = 0; i < students.size(); i++){
+                if(hasCompletedRequirements(students[i]) == 1){
+                    students[i].print();
+                }
+            }
+        }
+
+        
 
         int giveGrade(int i){ 
             int lb = 0, ub = 10;
@@ -321,14 +377,8 @@ class UniSystem {
             int grade = (rand() % (ub - lb + 1)) + lb;
             return grade; 
         }
-           /* for (const auto& entry : enrolledCourses) {
-                const Student& student = getStudentById(entry.first);
-                const std::vector<Course>& studentCourses = entry.second;
-                if (std::find(studentCourses.begin(), studentCourses.end(), course) != studentCourses.end()) {
-                    // Student is enrolled in the course
-                    std::cout << student.getName() << " (ID: " << student.getStudentId() << ")\n";
-                }
-            }
-        } */
+
+
+          
 
 };

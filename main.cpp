@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include "University.h"
-#define MAXSEMESTERS 2
 
 
 int main() {                            
@@ -80,8 +79,8 @@ int main() {
     university.printProfessorsByCourse(courses[0]);         //Τους εκτυπώνω
     cout<<endl;
 
-    university.enrollStudentInCourse(students[0], {courses[0], courses[1]});    //Εγγράφω τους μαθητές ανά μάθημα
-    university.enrollStudentInCourse(students[1], {courses[0], courses[1], courses[2]});
+    university.enrollStudentInCourse(students[0], {courses[0], courses[1], courses[2], courses[3], courses[4], courses[5], courses[6], courses[7], courses[8]});    //Εγγράφω τους μαθητές ανά μάθημα
+    university.enrollStudentInCourse(students[1], {courses[0], courses[1], courses[2], courses[3], courses[4], courses[5], courses[6], courses[7], courses[8]});
     university.printCoursesByStudent(students[0]);               //Τους εκτυπώνω
     university.printCoursesByStudent(students[1]);
     cout<<endl;
@@ -89,7 +88,18 @@ int main() {
     university.displayPassedStudents(courses[0], 2);
     cout<<endl;
 
-    university.professorStatistics(professors[1], 1);
+    university.professorStatistics(professors[0], 3);
     cout<<endl;
+
+    university.printStudentGradesInAllSemesters(students[0]);
+    university.printStudentGradesInAllSemesters(students[1]);
+    cout<<endl;
+
+    university.printStudentGradesBySemester(students[1], 1);
+    university.printStudentGradesBySemester(students[1], 2);
+    university.printStudentGradesBySemester(students[1], 3);
+    cout<<endl;
+
+    university.printElligibleForDegree();
     return 0;
 }

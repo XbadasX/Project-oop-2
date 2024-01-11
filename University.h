@@ -13,15 +13,14 @@ class UniSystem {
         vector <Student> students;            //Φτιάχνω ένα vector απο Student
         vector <Professor> professors;        //Φτιάχνω ένα vector απο Professor
         vector <Course> courses;              //Φτιάχνω ένα vector απο Course
-        unordered_map <int, vector <Course>> enrolledCourses;   
-        unordered_map <int, vector <Course>> enrolledStudentInCourses;
-        unordered_map <int, vector <int>> studentGradesInCourses;
-        Semester semester;
+        unordered_map <int, vector <Course>> enrolledCourses;           //unorderd map για enrolled Courses με παραμετρους int για εξάμηνο και vector <course> για τα μαθήματα του εξαμήνου
+        unordered_map <int, vector <Course>> enrolledStudentInCourses;  //unordered map για τα μαθήματα που κανει enroll ένας μαθητής με παραμέτρους int για το id μαθητή και vector <courses> για τα μαθήματα που πήρε ο μαθητής
+        unordered_map <int, vector <int>> studentGradesInCourses;       //unordered map για τους βαθμους σε μαθήματα ενώς μαθητή με παραμέτρους int για το id μαθητή και vector <int> για τους βαθμούς σε μαθήματα που πήρε ο μαθητής
+        Semester semester;                                              //Φτιάχνω ένα αντικείμενο κλάσης Semester
 
-        bool hasCompletedRequirements(Student &student){
+        bool hasCompletedRequirements(Student &student){                //Συνάρτηση που ελέγχει αν ένας μαθητής πληρεί τις απαιτήσεις για πτυχίο και επιστρέφει αληθής ή ψευδής ανάλογα
             int sum_compulsory = 0;
             int sum_ects = 0;
-         //  cout<<student.getStudentYear()<<endl;
             if(student.getStudentYear() >= MAX_YEARS){
                 vector <Course> course = enrolledStudentInCourses[student.getStudentId()];
                 for(auto i = 0; i < course.size(); i++){
@@ -31,13 +30,11 @@ class UniSystem {
                         }
                         sum_ects += course[i].getEcts();
                     }
-                   // cout << "sum comp = " << sum_compulsory << " sum ects = " << sum_ects << endl;
                     if(sum_compulsory >= COMPULSORY_COURSES && sum_ects >= MIN_ECTS){
                         return 1;
                     }
                 }
             }
-            cout << "sum comp = " << sum_compulsory << " sum ects = " << sum_ects << endl;
             return 0;
         }
 
@@ -82,7 +79,7 @@ class UniSystem {
             students.push_back(student);
         }
 
-        vector <Student> deleteStudent(Student& student){                                  //Διαγράφω έναν student απο τον vector students
+        vector <Student> deleteStudent(Student& student){                      //Διαγράφω έναν student απο τον vector students
             for(auto i = 0; i < students.size(); i++){
                 if(student.getStudentId() == students[i].getStudentId()){
                     students.erase(students.begin() + i);
@@ -129,7 +126,7 @@ class UniSystem {
             professors.push_back(professor);
         }
 
-        vector <Professor> deleteProfessor(Professor& professor){                                 //Διαγράφω έναν professor απο το vector professors
+        vector <Professor> deleteProfessor(Professor& professor){                   //Διαγράφω έναν professor απο το vector professors
             for(auto i = 0; i < professors.size(); i++){
                 if(professor.getProfessorId() == professors[i].getProfessorId()){
                     professors.erase(professors.begin() + i);
@@ -144,7 +141,7 @@ class UniSystem {
             courses.push_back(course);
         }
 
-        vector <Course> deleteCourse(Course& course){                                          //Διαγράφω ενα course απο το vector courses
+        vector <Course> deleteCourse(Course& course){                              //Διαγράφω ενα course απο το vector courses
             for(auto i = 0; i < courses.size(); i++){
                 if(course.getCourseId() == courses[i].getCourseId()){
                     courses.erase(courses.begin() + i);
@@ -154,7 +151,7 @@ class UniSystem {
             return courses;
         }
 
-        void changeName(Course& course, string nam){                                    //Αλλάζω το όνομα ενώς course με βαση το id του
+        void changeName(Course& course, string nam){                               //Αλλάζω το όνομα ενώς course με βαση το id του
             for(auto i = 0; i < courses.size(); i++){
                 if(course.getCourseId() == courses[i].getCourseId()){
                     course.setName(nam);
@@ -165,7 +162,7 @@ class UniSystem {
             cout<<"Course not found"<<endl;
         }
 
-        void changeEcts(Course& course, int ect){                                       //Αλλάζω τα ects ενώς course με βαση το id του
+        void changeEcts(Course& course, int ect){                                  //Αλλάζω τα ects ενώς course με βαση το id του
             for(auto i = 0; i < courses.size(); i++){
                 if(course.getCourseId() == courses[i].getCourseId()){
                     course.setEcts(ect);
@@ -176,7 +173,7 @@ class UniSystem {
             cout<<"Course not found"<<endl;
         }
 
-        void changeCompulsory(Course& course, bool comp){                               //Αλλάζω την υποχρεωτικότητα ενώς course με βαση το id του
+        void changeCompulsory(Course& course, bool comp){                          //Αλλάζω την υποχρεωτικότητα ενώς course με βαση το id του
             for(auto i = 0; i < courses.size(); i++){
                 if(course.getCourseId() == courses[i].getCourseId()){
                     course.setCompulsory(comp);
@@ -187,11 +184,11 @@ class UniSystem {
             cout<<"Course not found"<<endl;
         }
 
-        void enrollCourses(int semester, vector <Course> courses){                      //Εγγράφω τα μαθήματα ενώς εξαμήνου σε ενα unordered map (enrolledCourses)
+        void enrollCourses(int semester, vector <Course> courses){                //Εγγράφω τα μαθήματα ενώς εξαμήνου σε ενα unordered map (enrolledCourses)
             enrolledCourses[semester - 1] = courses;
         }
 
-        void changeCourseSemester(Course course, int prevSemester, int newSemester){
+        void changeCourseSemester(Course course, int prevSemester, int newSemester){        //Αλλάζω το εξάμηνο ενώς μαθήματος
             vector <Course> c = enrolledCourses[prevSemester - 1];
             for(auto i = 0; i < c.size(); i++){
                 if(course.getCourseId() == c[i].getCourseId()){
@@ -265,25 +262,25 @@ class UniSystem {
         }
 
 
-        void printStudents(){
+        void printStudents(){                                               //Εκτυπώνω όλους τους μαθητές
             for(auto i = 0; i < students.size(); i++){
                 students[i].print();
             }
         }
 
-        void printProfessors(){
+        void printProfessors(){                                             //Εκτυπώνω όλους τους professors
             for(auto i = 0; i < professors.size(); i++){
                 professors[i].print();
             }
         }
 
-        void printCourses(){
+        void printCourses(){                                                 //Εκτυπώνω ολα τα courses
             for(auto i = 0; i < courses.size(); i++){
                 courses[i].display();
             }
         }
 
-        void displayPassedStudents(Course &course, int academicSemester) {
+        void displayPassedStudents(Course &course, int academicSemester) {      //Εκτυπώνω τους μαθητές που πέρασαν ένα μαθημα σε συγκεκριμένο εξάμηνο και τους εισάγω σε ενα αρχείο PassedStudents.txt
             cout << "Students who passed " << course.getCourseName() << " in semester " << academicSemester << ":\n";
             vector <Student> students2;
             for(auto i = 100; i < enrolledStudentInCourses.size() + 100; i++){
@@ -308,7 +305,7 @@ class UniSystem {
             studentFout(students2, "PassedStudents.txt");
         }
 
-        void professorStatistics(Professor &professor, int sem){
+        void professorStatistics(Professor &professor, int sem){                //Εκτυπώνω τα statistics ενώς καθηγητή
             cout << "Professor " << professor.getName() << "'s statistics for semester " << sem << ":\n";
             unordered_map <string, vector<Professor>> teachers = semester.getTeachersMap();
             for(auto i = 0; i < courses.size(); i++){
@@ -339,7 +336,7 @@ class UniSystem {
             }
         }
 
-        void printStudentGradesInAllSemesters(Student &student){
+        void printStudentGradesInAllSemesters(Student &student){                //Εκτυπώνω τους βαθμούς ενώς μαθητή για όλα τα μαθήματα σε όλα τα εξάμηνα
             cout << "Analytical grades for student " << student.getName() << " (ID: " << student.getStudentId() << ") "  << ":\n";
             vector <Course> c = enrolledStudentInCourses[student.getStudentId()];
             for(auto n = 0; n < c.size(); n++){
@@ -347,7 +344,7 @@ class UniSystem {
             }
         }
 
-        void printStudentGradesBySemester(Student &student, int sem){
+        void printStudentGradesBySemester(Student &student, int sem){           //Εκτυπώνω τους βαθμούς ενώς μαθητή για τα μαθήματα ενώς εξαμήνου
              cout << "Analytical grades for student " << student.getName() << " (ID: " << student.getStudentId() << ") " << " in semester "<< sem << ":\n";
             vector <Course> course = enrolledCourses[sem - 1];
             for (auto i = 0; i < course.size(); i++){
@@ -360,7 +357,7 @@ class UniSystem {
             }
         }
 
-        void printElligibleForDegree() {
+        void printElligibleForDegree() {                            //Εκτυπώνω τους μαθητές που πληρούν τις απαιτήσεις για πτυχίο
             cout << "Students eligible for degree:\n";
             for(auto i = 0; i < students.size(); i++){
                 if(hasCompletedRequirements(students[i]) == 1){
@@ -371,7 +368,7 @@ class UniSystem {
 
         
 
-        int giveGrade(int i){ 
+        int giveGrade(int i){                                       //Συνάρτηση παραγωγής τυχαίου βαθμόυ μαθήματος
             int lb = 0, ub = 10;
             srand((i)*time(0));
             int grade = (rand() % (ub - lb + 1)) + lb;

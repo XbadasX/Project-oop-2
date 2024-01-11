@@ -35,15 +35,15 @@ using namespace std;
         return age;
     }
 
-    void Person::setName(string nam){
+    void Person::setName(string nam){                   //Συνάρτηση που κάνω set το όνομα όταν την καλέσω
         name = nam;
     }
 
-    void Person::setSurname(string sur){
+    void Person::setSurname(string sur){                //Συνάρτηση που κάνω set το επίθετο όταν την καλέσω
         surname = sur;
     }
 
-    void Person::setAge(int ag){
+    void Person::setAge(int ag){                        //Συνάρτηση που κάνω set την ηλικία όταν την καλέσω
         age = ag;
     }
 

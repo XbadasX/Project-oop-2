@@ -4,7 +4,7 @@
 #include <cstring>
 using namespace std;
 
-vector <Student> studentFin(string file){
+vector <Student> studentFin(string file){                   //Ειξαγωγή στοιχείων μαθητών απο αρχείο
     string fileName = file;
     ifstream fin;
     fin.open(fileName);
@@ -22,7 +22,7 @@ vector <Student> studentFin(string file){
     return students;
 }
 
-vector <Professor> professorFin(string file){
+vector <Professor> professorFin(string file){                   //Ειξαγωγή στοιχείων professors απο αρχείο
     string fileName = file;
     ifstream fin;
     fin.open(fileName);
@@ -40,7 +40,7 @@ vector <Professor> professorFin(string file){
     return professors;
 }
 
-vector <Course> courseFin(string file){
+vector <Course> courseFin(string file){                     //Ειξαγωγή στοιχείων courses απο αρχείο
     string fileName = file;
     ifstream fin;
     fin.open(fileName);

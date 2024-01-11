@@ -4,7 +4,7 @@
 #include <cstring>
 using namespace std;
 
-void studentFout(vector <Student> students, string filename){
+void studentFout(vector <Student> students, string filename){           //Εισαγωγή στοιχείων μαθητών σε αρχείο
     ofstream fout;
     fout.open(filename);
 
@@ -19,7 +19,7 @@ void studentFout(vector <Student> students, string filename){
 
 }
 
-void professorFout(vector <Professor> professors){
+void professorFout(vector <Professor> professors){                       //Εισαγωγή στοιχείων professors σε αρχείο
     ofstream fout;
     fout.open("ProfessorsAfter.txt");
 
@@ -34,7 +34,7 @@ void professorFout(vector <Professor> professors){
 
 }
 
-void courseFout(vector <Course> courses){
+void courseFout(vector <Course> courses){                           //Εισαγωγή στοιχείων courses σε αρχείο
     ofstream fout;
     fout.open("CoursesAfter.txt");
 

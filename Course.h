@@ -13,7 +13,7 @@ class Course{
     public:
         Course(string c_name, int ec, bool comp, int Id): courseName(c_name), ects(ec), compulsory(comp), courseId(Id){}        //O constructor ενώς course
 
-        void display(){         //Εκτυπώνω τα περιεχόμενα ενώς course
+        void display(){                     //Εκτυπώνω τα περιεχόμενα ενώς course
             cout << "Course: " << courseName << ", Ects: " << ects << ", Compulsory: " << (compulsory ? "Yes" : "No") << ", Course Id: " << courseId <<endl;
         }
 
@@ -64,7 +64,7 @@ class Semester{
             cout<<endl;
         }
 
-        unordered_map <string, vector<Professor>> getTeachersMap(){
+        unordered_map <string, vector<Professor>> getTeachersMap(){             //Get για το map του teachers
             return teachers;
         }
 }; 

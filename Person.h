@@ -12,15 +12,15 @@ public:
 
     string getName();                                        //Συνάρτηση που παίρνω το όνομα όταν την καλέσω
 
-    string getSurname();                                     //Συνάρτηση που παίρνω το επίθετω όταν την καλέσω
+    string getSurname();                                     //Συνάρτηση που παίρνω το επίθετο όταν την καλέσω
 
     int getAge();                                            //Συνάρτηση που παίρνω την ηλικία όταν την καλέσω
 
-    void setName(string nam);
+    void setName(string nam);                                //Συνάρτηση που κάνω set το όνομα όταν την καλέσω
 
-    void setSurname(string sur);
+    void setSurname(string sur);                             //Συνάρτηση που κάνω set το επίθετο όταν την καλέσω
 
-    void setAge(int ag);
+    void setAge(int ag);                                     //Συνάρτηση που κάνω set την ηλικία όταν την καλέσω
 
     virtual void print();                                            //Συνάρτηση που εκτυπώνω τα στοιχεία ενός person
 
@@ -33,17 +33,17 @@ public:
     friend istream& operator>>(istream& is, Person& a);             //Friend συνάρτηση υπερφόρτωσης του τελεστή >> για είσοδο και καλείται οταν του δίνω person;
 };
 
-class Student: public Person{
-        int studentId, studentYear;
+class Student: public Person{                                   //Κλάση student που κληρονομέι την person
+        int studentId, studentYear;                             //Ως private στοιχεία προσθέτω το Id και χρονιά φοίτησης
     public:
-        Student(int ag, string nam, string sur, int year, int id) : Person(ag, nam, sur), studentYear(year), studentId(id) {}
+        Student(int ag, string nam, string sur, int year, int id) : Person(ag, nam, sur), studentYear(year), studentId(id) {}  //Constructor της student
 
-        void print() {
+        void print() {                                          //Εκτυπώνω τα περιεχόμενα ενώς student
             Person::print();
             cout <<", Year Of Study: "<< studentYear<< ", Student ID: " << studentId << endl;
         }
 
-        int getStudentId(){
+        int getStudentId(){                                     //Getters για id και χρονιά φοίτησης
             return studentId;
         }
 
@@ -52,18 +52,18 @@ class Student: public Person{
         }
 };
 
-class Professor: public Person{
+class Professor: public Person{                                 //Κλάση professor που κληρονομέι την person
     private:
-        int professorId;
+        int professorId;                                        //Ως private στοιχεία προσθέτω το Id
     public:
         Professor(int ag, string nam, string sur, int id) : Person(ag, nam, sur), professorId(id) {}
 
-        void print() {
+        void print() {                                          //Εκτυπώνω τα περιεχόμενα ενώς professor
             Person::print();
             cout << ", Professor ID: " << professorId << endl;
         }
 
-        int getProfessorId(){
+        int getProfessorId(){                                   //Getter για id
             return professorId;
         }
 };

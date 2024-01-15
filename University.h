@@ -41,15 +41,24 @@ class UniSystem {
     public:
     
 
-        void changeName(Student& student, string nam){                  //Αλλάζω το όνομα ενώς student με βαση το id του
+        void changeName(Student& student, string nam){               //Αλλάζω το όνομα ενώς student με βαση το id του
+          try{                                                       //Χρήση exception error σε περίπτωση που δεν βρεθεί μαθητής
+            bool studentFound = false;              
             for(auto i = 0; i < students.size(); i++){
                 if(student.getStudentId() == students[i].getStudentId()){
                     student.setName(nam);
                     students[i].setName(nam);
+                    studentFound = true;
                     return;
                 }
             }
-            cout<<"Student not found"<<endl;
+            if(!studentFound){
+                throw "Student not found";
+            }
+          }
+          catch(char* error){
+            cout<<error<<endl;
+          }
         }
 
         void changeSurname(Student& student, string sur){                   //Αλλάζω το επίθετο ενώς student με βαση το id του

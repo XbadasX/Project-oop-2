@@ -47,11 +47,6 @@ using namespace std;
         age = ag;
     }
 
-
-    void Person::print() {                                                          //Συνάρτηση που εκτυπώνω τα στοιχεία ενός person
-        cout << "Name: " << name << ", Surname: " << surname << ", Age: " << age;
-    }
-
     ostream& operator<<(ostream& os, const Person* a){              //Friend συνάρτηση υπερφόρτωσης του τελεστή << για έξοδο
         os<< "Name: "<<a->name<<" / "<<"Surname: "<<a->surname<<" / "<<" / "<<"Age: "<<a->age<<endl;
         return os;

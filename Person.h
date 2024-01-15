@@ -22,7 +22,7 @@ public:
 
     void setAge(int ag);                                     //Συνάρτηση που κάνω set την ηλικία όταν την καλέσω
 
-    virtual void print();                                            //Συνάρτηση που εκτυπώνω τα στοιχεία ενός person
+    virtual void print() = 0;                                            //Aφηρημένη Συνάρτηση που εκτυπώνω τα στοιχεία ενός person
 
     friend ostream& operator<<(ostream& os, const Person* a);       //Friend συνάρτηση υπερφόρτωσης του τελεστή << για έξοδο και καλείται οταν του δίνω pointer σε person;
     
@@ -39,7 +39,7 @@ class Student: public Person{                                   //Κλάση stu
         Student(int ag, string nam, string sur, int year, int id) : Person(ag, nam, sur), studentYear(year), studentId(id) {}  //Constructor της student
 
         void print() {                                          //Εκτυπώνω τα περιεχόμενα ενώς student
-            Person::print();
+            cout << "Name: " << getName() << ", Surname: " << getSurname() << ", Age: " << getAge();
             cout <<", Year Of Study: "<< studentYear<< ", Student ID: " << studentId << endl;
         }
 
@@ -59,7 +59,7 @@ class Professor: public Person{                                 //Κλάση pro
         Professor(int ag, string nam, string sur, int id) : Person(ag, nam, sur), professorId(id) {}
 
         void print() {                                          //Εκτυπώνω τα περιεχόμενα ενώς professor
-            Person::print();
+            cout << "Name: " << getName() << ", Surname: " << getSurname() << ", Age: " << getAge();
             cout << ", Professor ID: " << professorId << endl;
         }
 
